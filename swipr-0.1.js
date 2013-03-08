@@ -19,25 +19,63 @@
 
 	var Swipr = function (el, options) {
 		
+		/*
+		* Default options, extend with instance options
+		*/
 		this.options = $.extend({
 			auto: 0,
 			speed: 500,
 			resizable: true,
-			selector: 'swipe-item',
+			selector: '.swipe-item',
 			onSwipeStart: function () {},
 			onSwipeEnd:   function () {}
 		}, options);
 
+		/*
+		* Cache objects so we don't need to search for them all the time
+		*/
 		this.$container  = $(el);
-		this.$items      = $('.' + this.options.selector.replace(/\./g, ''), el);
+		this.$items      = $(this.options.selector, el);
+		/*
+		* Setup
+		*/
 		this._index      = 0;
 		this._intervalId = 0;
 		
 		var self        = this;
 		
+		/*
+		* Constants for swipe directions
+		*/
 		var LEFT  = -1,
 			RIGHT = 1;
 		
+		/*
+		* Create touch start event depending on browser
+		*/
+		var _touchStartEvent = function () {
+				return window.navigator.msPointerEnabled ? "MSPointerDown" : "touchstart"; 
+			}(),
+		/*
+		* Create touch move event depending on browser
+		*/
+			_touchMoveEvent = function () {
+				return window.navigator.msPointerEnabled ? "MSPointerMove" : "touchmove";
+			}(),
+		/*
+		* Create touch end event depending on browser
+		*/
+			_touchEndEvent = function () {
+				return window.navigator.msPointerEnabled ? "MSPointerUp" : "touchend";
+			}();
+
+		/*
+		* Helper method to determine if visitor is using a touch device,
+		* and if the visitor has a modern browser that support
+		* CSS3 transitions
+		*
+		* @returns {Object} An object with 'touch' and 'transitions' booleans
+		*/
 		this.has = function () {
 			return {
 				'touch': !!(function () {
@@ -60,16 +98,11 @@
 			};
 		}();
 		
-		var _touchStartEvent = function () {
-			return window.navigator.msPointerEnabled ? "MSPointerDown" : "touchstart"; 
-		}();
-		var _touchMoveEvent = function () {
-			return window.navigator.msPointerEnabled ? "MSPointerMove" : "touchmove";
-		}();
-		var _touchEndEvent = function () {
-			return window.navigator.msPointerEnabled ? "MSPointerUp" : "touchend";
-		}();
-		
+		/*
+		* Slide to index + 1 item
+		*
+		* @returns {Void}
+		*/
 		this.next = function () {
 			
 			if (this._index === this.$items.length - 1) {
@@ -78,14 +111,15 @@
 				this._index++;
 			}
 			
-			if (this.has.transitions) {
-				this.slideTo(this._index);
-			} else {
-				this.animateTo(this._index);
-			}
+			this.slideTo(this._index);
 			
 		};
 		
+		/*
+		* Slide to index - 1 item
+		*
+		* @returns {Void}
+		*/
 		this.prev = function () {
 			
 			if (this._index === 0) {
@@ -94,18 +128,24 @@
 				this._index--;
 			}
 			
-			if (this.has.transitions) {
-				this.slideTo(this._index);
-			} else {
-				this.animateTo(this._index);
-			}
+			this.slideTo(this._index);
 			
 		};
 		
+		/*
+		* Stop the automatic slide (if any)
+		*
+		* @returns {Void}
+		*/
 		this.stop = function () {
 			clearInterval(self._intervalId);
 		};
 		
+		/*
+		* Restart the automatic slide (if any)
+		*
+		* @returns {Void}
+		*/
 		this.restart = function () {
 
 			if (self.options.auto) {
@@ -116,6 +156,14 @@
 
 		}
 
+		/*
+		* Animate a transition slide, used only when a touchmove is active and
+		* does not 'snap' to an item index -- only 'follows' touch point.
+		*
+		* @param fromPosX {Integer} From a geometric X point
+		* @param toPosX   {Integer} To a geometric X point
+		* @returns {Void}
+		*/
 		this._animate = function (fromPosX, toPosX) {
 			
 			var left   = self.$movable.position().left;
@@ -133,6 +181,15 @@
 					style.OTransform = 'translateX(' + (left + (toPosX - fromPosX)) + 'px)';
 			
 		};
+
+		/*
+		* Animate a transition slide, to an item index - a 'snap-to' transition
+		*
+		* @param index {Integer} The item index to be shown
+		* @param speed {Integer} The speed of the animation
+		* @param force {Boolean} Should the animation be forced to use $.animate()?
+		* @returns {Void}
+		*/
 		this.slideTo = function (index, speed, force) {
 			
 			index = index >= 0 ? index : 0;
@@ -145,6 +202,10 @@
 			
 			speed = speed || self.options.speed;
 			
+			/*
+			* Check to see if transitions is enabled or if the animation
+			* should be forced to use JavaScript animation
+			*/
 			if (!this.has.transitions || force) {
 				return this._animatedSlide(posX, speed, index);
 			}
@@ -165,6 +226,16 @@
 			}, speed);
 			
 		};
+
+		/*
+		* A fallback for when CSS3 transitions is not available, or
+		* when an animation should be forced to use $.animate()
+		*
+		* @param posX  {Integer} Geometric X point to animate to
+		* @param speed {Integer} The duration of the animation
+		* @param index {Integer} The items index
+		* @returns {Void}
+		*/
 		this._animatedSlide = function (posX, speed, index) {
 			
 			self.$movable.animate({'left': posX + 'px'}, speed, function () {
@@ -173,6 +244,13 @@
 			
 		};
 		
+		/*
+		* Helper function for handling touchstart, resetting
+		* variables for the touchmove event
+		*
+		* @param e {Object} The touch event
+		* @returns {Void}
+		*/
 		var _ontouch = function (e) {
 			
 			this._x         = e.touches ? e.touches[0].pageX : e.pageX;
@@ -184,8 +262,17 @@
 			this._timeId    = 0;
 			
 		};
+		/*
+		* Helper function for handling touchmove
+		*
+		* @param e {Object} The touch event
+		* @returns {Void}
+		*/
 		var _onmove = function (e) {
 			
+			/*
+			* If it's a pinch, don't slide
+			*/
 			if (e.touches && e.touches.length > 1) {
 				return;
 			}
@@ -193,6 +280,9 @@
 			var pageX = e.touches ? e.touches[0].pageX : e.pageX,
 				pageY = e.touches ? e.touches[0].pageY : e.pageY;
 			
+			/*
+			* If the scroll direction is vertical, don't slide
+			*/
 			if (!this._scroll && Math.abs(Math.abs(this._y) - Math.abs(pageY)) > Math.abs(Math.abs(this._x) - Math.abs(pageX))) {
 				return;
 			}
@@ -204,6 +294,10 @@
 			this._scroll = true;
 			this._direction = this._x < pageX ? RIGHT : LEFT;
 			
+			/*
+			* If it's a mobile IE browser and the touchmove is outside the container,
+			* force an OnTouchEnd event with forced animation using $.animate()
+			*/
 			if (window.navigator.msPointerEnabled && (pageX < self.$container.offset().left || pageX > (self.$container.offset().left + self.$container.width()))) {
 				_onend.call(this, null, true);
 			}
@@ -212,6 +306,13 @@
 			this._x = pageX;
 			
 		};
+		/*
+		* Helper function for handling touchend
+		*
+		* @param e 				{Object}  The touch event
+		* @param forceAnimation {Boolean} Should the animation be forced to use $.animate()?
+		* @returns {Void}
+		*/
 		var _onend = function (e, forceAnimation) {
 			
 			if (this._scroll) {
@@ -229,31 +330,63 @@
 			}
 			
 		};
-		
-		var _init = function () {
 
-			if (self.$items.length < 2) {
-				return;
-			}
-			
-			self.$items.appendTo($('<div style="overflow: hidden; position: relative;"></div>').appendTo(self.$container));
-			$(window).load(_startTouchSwipe);
-			
+		/*
+		* Helper function to handle sizes and offsets,
+		* called on initialize and on window resize
+		*
+		* @returns {Void}
+		*/
+		var _resetSizes = function () {
+
 			self.$items.css({
 				'width': self.$container.width() + 'px'
 			});
 			self.$container.children().css({
 				'width': (self.$items.length * self.$container.width()) + 'px'
 			});
+		
+			self._offset  = self.$movable.offset().left;
+		};
+		
+		/*
+		* Setup slider and start the automatic slide (if any)
+		*
+		* @returns {Void}
+		*/
+		var _init = function () {
+
+			if (self.$items.length < 2) {
+				return;
+			}
+			
+			/*
+			* Create a container element, which we can use
+			* to slide the content to the right and left
+			*/
+			self.$movable = $('<div style="overflow: hidden; position: relative;"></div>');
+			self.$items.appendTo(self.$movable.appendTo(self.$container));
+			$(window).load(_startTouchSwipe);
+
+			_resetSizes();
 			
 			if (self.options.auto) {
 				self._intervalId = setInterval(function () {
 					self.next();
 				}, self.options.auto);
 			}
+
+			if (self.options.resizable) {
+				$(window).on('resize', _resetSizes);
+			}
 			
 		};
 		
+		/*
+		* Activate touch events if available
+		*
+		* @returns {Void}
+		*/
 		var _startTouchSwipe = function () {
 			
 			if (self.has.touch) {
@@ -266,17 +399,23 @@
 				self.$container.get(0).addEventListener(_touchEndEvent,   _onend,   false);
 			}
 			
-			self.$movable = self.$container.children().eq(0);
-			self._offset  = self.$movable.offset().left;
-			
 		};
 		
+		/*
+		* Initialize Swipr
+		*/
 		_init();
 		
 	};
 	
+	/*
+	* Add Swipr to the global namespace
+	*/
 	window.Swipr = Swipr;
 	
+	/*
+	* Create a jQuery helper function
+	*/
 	$.fn.Swipr = function (options) {
 		
 		$.each(this, function () {
