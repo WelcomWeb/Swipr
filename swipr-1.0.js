@@ -1,12 +1,12 @@
 /**
-* Swipr 0.1
+* Swipr 1.0
 *
 * A responsive, mobile friendly, javascript and CSS3 slider
 *
 * @author Björn Wikström <bjorn@welcom.se>
 * @license LGPL v3 <http://www.gnu.org/licenses/lgpl.html>
-* @version 0.1
-* @copyright Welcom Web i Göteborg AB 2012
+* @version 1.0
+* @copyright Welcom Web i Göteborg AB 2013
 */
 ;(function (window, document, $, undef) {
     
@@ -26,6 +26,7 @@
             auto: 0,
             speed: 500,
             resizable: true,
+            startAt: 0,
             selector: '.swipe-item',
             onSwipeStart: function () {},
             onSwipeEnd:   function () {}
@@ -39,7 +40,7 @@
         /*
         * Setup
         */
-        this._index      = 0;
+        this._index      = this.options.startAt || 0;
         this._intervalId = 0;
         
         /*
@@ -128,6 +129,15 @@
             
             this.slideTo(this._index);
             
+        };
+
+        /*
+        * Get the current item index
+        *
+        * @returns {Integer}
+        */
+        this.index = function () {
+            return this._index;
         };
         
         /*
