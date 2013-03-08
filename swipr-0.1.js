@@ -5,7 +5,7 @@
 *
 * @author Björn Wikström <bjorn@welcom.se>
 * @license LGPL v3 <http://www.gnu.org/licenses/lgpl.html>
-* @version 1.0
+* @version 0.1
 * @copyright Welcom Web i Göteborg AB 2012
 */
 ;(function (window, document, $, undef) {
@@ -42,8 +42,6 @@
 		this._index      = 0;
 		this._intervalId = 0;
 		
-		var self        = this;
-		
 		/*
 		* Constants for swipe directions
 		*/
@@ -70,7 +68,7 @@
 			}();
 
 		/*
-		* Helper method to determine if visitor is using a touch device,
+		* Helper to determine if visitor is using a touch device,
 		* and if the visitor has a modern browser that support
 		* CSS3 transitions
 		*
@@ -138,7 +136,7 @@
 		* @returns {Void}
 		*/
 		this.stop = function () {
-			clearInterval(self._intervalId);
+			clearInterval(this._intervalId);
 		};
 		
 		/*
@@ -148,10 +146,11 @@
 		*/
 		this.restart = function () {
 
-			if (self.options.auto) {
-				self._intervalId = setInterval(function () {
+			if (this.options.auto) {
+				var self = this;
+				this._intervalId = setInterval(function () {
 					self.next();
-				}, self.options.auto);
+				}, this.options.auto);
 			}
 
 		}
@@ -164,10 +163,10 @@
 		* @param toPosX   {Integer} To a geometric X point
 		* @returns {Void}
 		*/
-		this._animate = function (fromPosX, toPosX) {
+		var _animate = function (fromPosX, toPosX) {
 			
-			var left   = self.$movable.position().left;
-			var style  = self.$movable.get(0).style;
+			var left   = this.$movable.position().left;
+			var style  = this.$movable.get(0).style;
 			
 			style.webkitTransitionDuration = 
 				style.MozTransitionDuration = 
@@ -183,7 +182,7 @@
 		};
 
 		/*
-		* Animate a transition slide, to an item index - a 'snap-to' transition
+		* Animate a transition slide, to an item index -- a 'snap-to' transition
 		*
 		* @param index {Integer} The item index to be shown
 		* @param speed {Integer} The speed of the animation
@@ -193,21 +192,21 @@
 		this.slideTo = function (index, speed, force) {
 			
 			index = index >= 0 ? index : 0;
-			index = index < self.$items.length ? index : self.$items.length - 1;
+			index = index < this.$items.length ? index : this.$items.length - 1;
 
-			self.options.onSwipeStart.call(self, index);
+			this.options.onSwipeStart.call(this, index);
 			
-			var style = self.$movable.get(0).style,
+			var style = this.$movable.get(0).style,
 				posX  = -1 * (this.$container.width() * index);
 			
-			speed = speed || self.options.speed;
+			speed = speed || this.options.speed;
 			
 			/*
 			* Check to see if transitions is enabled or if the animation
 			* should be forced to use JavaScript animation
 			*/
 			if (!this.has.transitions || force) {
-				return this._animatedSlide(posX, speed, index);
+				return _animatedSlide.call(this, posX, speed, index);
 			}
 			
 			style.webkitTransitionDuration = 
@@ -221,6 +220,7 @@
 				style.MozTransform = 
 					style.OTransform = 'translateX(' + posX + 'px)';
 
+			var self = this;
 			setTimeout(function () {
 				self.options.onSwipeEnd.call(self, index);
 			}, speed);
@@ -236,14 +236,21 @@
 		* @param index {Integer} The items index
 		* @returns {Void}
 		*/
-		this._animatedSlide = function (posX, speed, index) {
+		var _animatedSlide = function (posX, speed, index) {
 			
-			self.$movable.animate({'left': posX + 'px'}, speed, function () {
+			var self = this;
+			this.$movable.animate({'left': posX + 'px'}, speed, function () {
 				self.options.onSwipeEnd.call(self, index);
 			});
 			
 		};
 		
+		/*
+		* Helper object for self reference, used
+		* in touch event helpers
+		*/
+		var self = this;
+
 		/*
 		* Helper function for handling touchstart, resetting
 		* variables for the touchmove event
@@ -339,14 +346,14 @@
 		*/
 		var _resetSizes = function () {
 
-			self.$items.css({
-				'width': self.$container.width() + 'px'
+			this.$items.css({
+				'width': this.$container.width() + 'px'
 			});
-			self.$container.children().css({
-				'width': (self.$items.length * self.$container.width()) + 'px'
+			this.$container.children().css({
+				'width': (this.$items.length * this.$container.width()) + 'px'
 			});
 		
-			self._offset  = self.$movable.offset().left;
+			this._offset  = this.$movable.offset().left;
 		};
 		
 		/*
@@ -356,28 +363,34 @@
 		*/
 		var _init = function () {
 
-			if (self.$items.length < 2) {
+			if (this.$items.length < 2) {
 				return;
 			}
+
+			var self = this;
 			
 			/*
 			* Create a container element, which we can use
 			* to slide the content to the right and left
 			*/
-			self.$movable = $('<div style="overflow: hidden; position: relative;"></div>');
-			self.$items.appendTo(self.$movable.appendTo(self.$container));
-			$(window).load(_startTouchSwipe);
+			this.$movable = $('<div style="overflow: hidden; position: relative;"></div>');
+			this.$items.appendTo(this.$movable.appendTo(self.$container));
+			$(window).load(function () {
+				_startTouchSwipe.call(self);
+			});
 
-			_resetSizes();
+			_resetSizes.call(this);
 			
-			if (self.options.auto) {
-				self._intervalId = setInterval(function () {
+			if (this.options.auto) {
+				this._intervalId = setInterval(function () {
 					self.next();
-				}, self.options.auto);
+				}, this.options.auto);
 			}
 
-			if (self.options.resizable) {
-				$(window).on('resize', _resetSizes);
+			if (this.options.resizable) {
+				$(window).on('resize', function () {
+					_resetSizes.call(self);
+				});
 			}
 			
 		};
@@ -389,14 +402,14 @@
 		*/
 		var _startTouchSwipe = function () {
 			
-			if (self.has.touch) {
+			if (this.has.touch) {
 				if (window.navigator.msPointerEnabled) {
-					self.$container.css('-ms-touch-action', 'pan-y');
+					this.$container.css('-ms-touch-action', 'pan-y');
 				}
 				
-				self.$container.get(0).addEventListener(_touchStartEvent, _ontouch, false);
-				self.$container.get(0).addEventListener(_touchMoveEvent,  _onmove,  false);
-				self.$container.get(0).addEventListener(_touchEndEvent,   _onend,   false);
+				this.$container.get(0).addEventListener(_touchStartEvent, _ontouch, false);
+				this.$container.get(0).addEventListener(_touchMoveEvent,  _onmove,  false);
+				this.$container.get(0).addEventListener(_touchEndEvent,   _onend,   false);
 			}
 			
 		};
@@ -404,7 +417,7 @@
 		/*
 		* Initialize Swipr
 		*/
-		_init();
+		_init.call(this);
 		
 	};
 	
