@@ -9,12 +9,14 @@ Currently Swipr is dependent on [jQuery](https://github.com/jquery/jquery), whic
 ## Browser support
 The library is tested in (and on):
 
-* Chrome 25
-* Chrome Mobile 18 on Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1
-* Internet Explorer 10 Mobile on Nokia Lumia 920 with Windows 8
-
-## Demo
-Watch a demo of Swipr at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
+* Firefox 19 (desktop)
+* Safari 6 (desktop)
+* Chrome 25 (desktop)
+* Chrome Mobile 18 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
+* Chrome Mobile 23, 24, 25 (iPhone with iOS6)
+* Safari Mobile (iPhone with iOS6)
+* Firefox Mobile 19 (Nexus 4 with Android 4.2.2)
+* Internet Explorer 10 Mobile (Nokia Lumia 920 with Windows 8)
 
 ## Usage
 Swipr needs minimal setup, the minimum amount of CSS, HTML and JavaScript is as follows;
@@ -46,23 +48,26 @@ Swipr needs minimal setup, the minimum amount of CSS, HTML and JavaScript is as 
         new Swipr(document.getElementById('mySwiprContainer'));
     })
 
-A more extensive usage demo is available at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
+## Demo
+A more extensive demo is available at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
 
 ## Options
 Supported options are (with default values shown):
 
-    auto: 0,
-    speed: 500,
-    resizable: true,
-    startAt: 0,
-    selector: '.swipe-item',
-    onSwipeStart: function () {},
-    onSwipeEnd:   function () {}
+    {
+        auto: 0,        // in ms
+        speed: 500,     // in ms
+        resizable: true,
+        startAt: 0,     // start at index
+        selector: '.swipe-item',
+        onSwipeStart: function (index) {},
+        onSwipeEnd:   function (index) {}
+    }
 
 * When `auto` is set to `0` no automatic sliding occurs, and it only listens to touch events.
 * The `selector` has to be a string selector, which points to the elements in the swipable container.
 
-## Initialization and methods
+## Initialization
 There are two ways to initialize Swipr, either by creating an instance manually or by using jQuery. Swipr has an API which you can access if you manually create the instances, instead of letting jQuery handle it. This gives you access to the following Swipr methods: `.stop()`, `.restart()`, `.next()`, `.prev()`, `.slideTo()` and `.index()`.
 
 Instance initialization:
@@ -95,7 +100,7 @@ Manually slide to a specified index in the queue, with optional speed and option
 ### Swipr.index()
 Returns the current index of the sliding queue.
 
-# License
+## License
 Swipr is released under [LGPL 3](https://www.gnu.org/copyleft/lesser.html).
 
 
