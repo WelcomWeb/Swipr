@@ -1,0 +1,16 @@
+body{
+	
+}
+
+.text-align-left{text-align: left;}
+.text-align-center{text-align: center;}
+
+.shadow{
+	background: transparent url(/images/shadow.png) no-repeat 50% 100%;
+	background-size: 100% 6px;
+	padding-bottom: 10px;
+}
+
+footer {
+	margin-top: 100px;
+}

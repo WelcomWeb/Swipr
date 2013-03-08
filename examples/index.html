@@ -1,0 +1,67 @@
+
+<html>
+	<head>
+		<title>Swipr demo</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="stylesheet" href="bootstrap.min.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="../swipr-1.0.js"></script>
+		
+		<!-- Simple initialization, with automatic sliding every 4th second -->
+		<script>
+			$(document).ready(function () {
+				new Swipr(document.getElementById('mySwiprContainer'), {
+					auto: 4000
+				});
+			});
+		</script>
+		
+		<!-- Needed Swipr CSS -->
+		<style>
+			#mySwiprContainer {
+				position: relative;
+				overflow: hidden;
+			}
+				#mySwiprContainer .swipe-item {
+					float: left;
+				}
+		</style>
+	</head>
+	<body>
+		<header class="container">
+			<div class="row">
+				<div class="span12">
+					<h1>Swipr - demo with Twitter Bootstrap</h1>
+					<h3>A responsive, mobile friendly, javascript and CSS3 slider</h3>
+					<p class="lead">Swipr is a cross platform library for enabling swipable elements and managing touch events. It's developed to work well responsive sites, supporting all large mobile browsers - from Safari Mobile to IE10 - as well as desktop browsers.</p>
+				</div>
+			</div>
+		</header>
+
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<div id="mySwiprContainer">
+						<div class="swipe-item">
+							<img src="http://lorempixel.com/1200/400/sports/5/" />
+						</div>
+						<div class="swipe-item">
+							<img src="http://lorempixel.com/1200/400/sports/4/" />
+						</div>
+						<div class="swipe-item">
+							<img src="http://lorempixel.com/1200/400/sports/3/" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="container">
+			<div class="row">
+				<div class="span12">
+					<p>&copy; Welcom Web i G&ouml;teborg AB, 2013. Released under <a href="https://www.gnu.org/copyleft/lesser.html" target="_blank">LGPL v3</a>.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

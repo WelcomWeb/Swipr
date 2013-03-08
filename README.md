@@ -16,6 +16,38 @@ The library is tested in (and on):
 ## Demo
 Watch a demo of Swipr at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
 
+## Usage
+Swipr needs minimal setup, the minimum amount of CSS, HTML and JavaScript is as follows;
+
+### HTML
+
+    <div id="mySwiprContainer">
+        <div class="swipe-item">
+            <img src="..." />
+        </div>
+        <div class="swipe-item">
+            <img src="..." />
+        </div>
+    </div>
+
+### CSS
+
+    #mySwiprContainer {
+        position: relative;
+        overflow: hidden;
+    }
+        #mySwiprContainer .swipe-item {
+            float: left;
+        }
+
+#### JavaScript
+
+    $(document).ready(function () {
+        new Swipr(document.getElementById('mySwiprContainer'));
+    })
+
+A more extensive usage demo is available at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
+
 ## Options
 Supported options are (with default values shown):
 
