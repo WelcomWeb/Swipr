@@ -1,10 +1,35 @@
+/**
+* Swipr 0.1
+*
+* A responsive, mobile friendly, javascript and CSS3 slider
+*
+* @author Björn Wikström <bjorn@welcom.se>
+* @license LGPL v3 <http://www.gnu.org/licenses/lgpl.html>
+* @version 1.0
+* @copyright Welcom Web i Göteborg AB 2012
+*/
 ;(function (window, document, $, undef) {
 	
+	/*
+	* If Swipr is already loaded, don't load it again
+	*/
+	if (typeof window.Swipr !== typeof undef) {
+		return;
+	}
+
 	var Swipr = function (el, options) {
 		
+		this.options = $.extend({
+			auto: 0,
+			speed: 500,
+			resizable: true,
+			selector: 'swipe-item',
+			onSwipeStart: function () {},
+			onSwipeEnd:   function () {}
+		}, options);
+
 		this.$container  = $(el);
-		this.$items      = $('.swipe-item', el);
-		this.options     = options;
+		this.$items      = $('.' + this.options.selector.replace(/\./g, ''), el);
 		this._index      = 0;
 		this._intervalId = 0;
 		
@@ -81,6 +106,16 @@
 			clearInterval(self._intervalId);
 		};
 		
+		this.restart = function () {
+
+			if (self.options.auto) {
+				self._intervalId = setInterval(function () {
+					self.next();
+				}, self.options.auto);
+			}
+
+		}
+
 		this._animate = function (fromPosX, toPosX) {
 			
 			var left   = self.$movable.position().left;
@@ -102,6 +137,8 @@
 			
 			index = index >= 0 ? index : 0;
 			index = index < self.$items.length ? index : self.$items.length - 1;
+
+			self.options.onSwipeStart.call(self, index);
 			
 			var style = self.$movable.get(0).style,
 				posX  = -1 * (this.$container.width() * index);
@@ -109,7 +146,7 @@
 			speed = speed || self.options.speed;
 			
 			if (!this.has.transitions || force) {
-				return this._slideToFallback(posX, speed);
+				return this._animatedSlide(posX, speed, index);
 			}
 			
 			style.webkitTransitionDuration = 
@@ -122,13 +159,17 @@
 			style.msTransform = 
 				style.MozTransform = 
 					style.OTransform = 'translateX(' + posX + 'px)';
+
+			setTimeout(function () {
+				self.options.onSwipeEnd.call(self, index);
+			}, speed);
 			
 		};
-		this._slideToFallback = function (posX, speed) {
+		this._animatedSlide = function (posX, speed, index) {
 			
-			/*self.$movable.animate({'left': posX + 'px'}, speed, function () {
-				alert('Done! On: ' + posX);
-			});*/
+			self.$movable.animate({'left': posX + 'px'}, speed, function () {
+				self.options.onSwipeEnd.call(self, index);
+			});
 			
 		};
 		
