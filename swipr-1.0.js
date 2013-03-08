@@ -205,7 +205,8 @@
             index = index < this.$items.length ? index : this.$items.length - 1;
 
             this.options.onSwipeStart.call(this, index);
-            
+            this._index = index;
+
             var style = this.$movable.get(0).style,
                 posX  = -1 * (this.$container.width() * index);
             
@@ -398,8 +399,13 @@
             }
 
             if (this.options.resizable) {
+                var timeoutId = 0;
                 $(window).on('resize', function () {
-                    _resetSizes.call(self);
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(function () {
+                        _resetSizes.call(self);
+                        self.slideTo(self.index(), 0);
+                    }, 50);
                 });
             }
             
