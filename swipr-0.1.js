@@ -309,7 +309,7 @@
                 _onend.call(this, null, true);
             }
             
-            self._animate(this._x, pageX);
+            _animate.call(self, this._x, pageX);
             this._x = pageX;
             
         };
