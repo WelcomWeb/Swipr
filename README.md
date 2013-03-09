@@ -12,14 +12,16 @@ The library is tested in (and on):
 * Firefox 19 (desktop)
 * Safari 6 (desktop)
 * Chrome 25 (desktop)
-* Chrome Mobile 18 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
+* Internet Explorer 7, 8, 9 (desktop)
+* Chrome Mobile 24, 25 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
+* Chrome Mobile 24, 25 (Nexus 7 with Android 4.2.2)
 * Chrome Mobile 23, 24, 25 (iPhone with iOS6)
 * Safari Mobile (iPhone with iOS6)
 * Firefox Mobile 19 (Nexus 4 with Android 4.2.2)
 * Internet Explorer 10 Mobile (Nokia Lumia 920 with Windows 8)
 
 ## Usage
-Swipr needs minimal setup, the minimum amount of CSS, HTML and JavaScript is as follows;
+Swipr needs minimal setup - the minimum amount of CSS, HTML and JavaScript is as follows;
 
 ### HTML
 
@@ -49,7 +51,7 @@ Swipr needs minimal setup, the minimum amount of CSS, HTML and JavaScript is as 
     })
 
 ## Demo
-A more extensive demo is available at [http://github.welcomweb.se/Swipr](http://github.welcomweb.se/Swipr).
+A more extensive demo is available at [http://welcomweb.se/Swipr](http://welcomweb.se/Swipr).
 
 ## Options
 Supported options are (with default values shown):
