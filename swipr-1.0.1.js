@@ -1,11 +1,11 @@
 /**
-* Swipr 1.0
+* Swipr 1.0.1
 *
 * A responsive, mobile friendly, javascript and CSS3 slider
 *
 * @author Björn Wikström <bjorn@welcom.se>
 * @license LGPL v3 <http://www.gnu.org/licenses/lgpl.html>
-* @version 1.0
+* @version 1.0.1
 * @copyright Welcom Web i Göteborg AB 2013
 */
 ;(function (window, document, $, undef) {
@@ -79,9 +79,9 @@
             return {
                 'touch': !!(function () {
                     
-                    return window.navigator.msPointerEnabled ?
-                            "MSPointerDown" :
-                                (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+                    return (('ontouchstart' in window) ||
+                            (window.DocumentTouch && document instanceof DocumentTouch) ||
+                            window.navigator.msMaxTouchPoints);
                     
                 }()),
                 'transitions': !!(function () {
