@@ -13,12 +13,15 @@ The library is tested in (and on):
 * Safari 6 (desktop)
 * Chrome 25 (desktop)
 * Internet Explorer 7, 8, 9 (desktop)
+* Opera 12.14 (desktop)
 * Chrome Mobile 24, 25 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
 * Chrome Mobile 24, 25 (Nexus 7 with Android 4.2.2)
 * Chrome Mobile 23, 24, 25 (iPhone with iOS6)
 * Safari Mobile (iPhone with iOS6)
+* Android Browser (Nexus One with Android 2.3.6)
 * Firefox Mobile 19 (Nexus 4 with Android 4.2.2)
 * Internet Explorer 10 Mobile (Nokia Lumia 920 with Windows 8)
+* Opera Mobile (Nexus 4 with Android 4.2.2)
 
 ## Usage
 Swipr needs minimal setup - the minimum amount of CSS, HTML and JavaScript is as follows;
