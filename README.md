@@ -12,7 +12,7 @@ The library is tested in (and on):
 * Firefox 19 (desktop)
 * Safari 6 (desktop)
 * Chrome 25 (desktop)
-* Internet Explorer 7, 8, 9 (desktop)
+* Internet Explorer 7, 8, 9, 10 (desktop)
 * Opera 12.14 (desktop)
 * Chrome Mobile 24, 25 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
 * Chrome Mobile 24, 25 (Nexus 7 with Android 4.2.2)
