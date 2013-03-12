@@ -14,3 +14,51 @@ body{
 footer {
 	margin-top: 100px;
 }
+
+
+/* Gallery Indicators - TODO: Improve the markup */
+
+.gallery-indicators{
+  margin-top:10px;
+  height:30px;
+  position: relative;
+}
+  .absolute-center-box{
+    position: absolute;
+    left:50%;
+    top:0px;
+  }
+    .absolute-center-box .inner{
+      position:relative;
+      left:-50%;
+    }
+    .absolute-center-box .item{
+      width:10px;
+      height: 10px;
+      float: left;
+      margin:10px 5px;
+    }
+      .absolute-center-box .item span{
+        display: block;
+        cursor: pointer;
+        width:10px;
+        height: 10px;
+        background-color: #AAA;
+        border-radius: 5px;background-image: linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
+        background-image: -o-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
+        background-image: -moz-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
+        background-image: -webkit-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
+        background-image: -ms-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(176,176,176)), color-stop(1, rgb(230,230,230)));
+        box-shadow: 1px 1px 3px #777;
+      }
+      .absolute-center-box .item.active span{
+        background-color: red;
+        cursor: default;
+        background-image: linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
+        background-image: -o-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
+        background-image: -moz-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
+        background-image: -webkit-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
+        background-image: -ms-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(191,32,32)), color-stop(1, rgb(255,15,15)));
+      }
