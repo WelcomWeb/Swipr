@@ -10,24 +10,11 @@
 		<!-- Simple initialization, with automatic sliding every 4th second -->
 		<script>
 			$(document).ready(function () {
-
-				var $swipeIndicators = $('.gallery-indicators .item');
 				
 				var swipe = new Swipr(document.getElementById('mySwiprContainer'), {
-					auto:5000,
-					onSwipeEnd: function() {
-					
-						$swipeIndicators.removeClass('active');
-						$swipeIndicators.eq(this.index()).addClass('active');
-						
-					}
-				});
-				
-				$swipeIndicators.on('click', function(){
-				
-					swipe.slideTo($(this).index());
-					swipe.stop();
-					
+						auto: 5000,
+						indicators: true,
+						indicatorElement: '.gallery-indicators .item'
 				});
 
 			});
@@ -67,15 +54,6 @@
 						</div>
 						<div class="swipe-item">
 							<img src="http://lorempixel.com/1200/400/sports/3/" />
-						</div>
-					</div>
-					<div class="gallery-indicators">
-						<div class="absolute-center-box">
-							<div class="inner">
-								<div class="item active"><span></span></div>
-								<div class="item"><span></span></div>
-								<div class="item"><span></span></div>
-							</div>
 						</div>
 					</div>
 				</div>

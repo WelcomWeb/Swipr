@@ -9,7 +9,7 @@
 * @copyright Welcom Web i Göteborg AB 2013
 */
 ;(function (window, document, $, undef) {
-    
+
     /*
     * If Swipr is already loaded, don't load it again
     */
@@ -18,7 +18,7 @@
     }
 
     var Swipr = function (el, options) {
-        
+
         /*
         * Default options, extend with instance options
         */
@@ -26,6 +26,8 @@
             auto: 0,
             speed: 500,
             resizable: true,
+            indicators: false,
+            indicatorElement: '.gallery-indicators .item',
             startAt: 0,
             selector: '.swipe-item',
             onSwipeStart: function () {},
@@ -35,14 +37,15 @@
         /*
         * Cache objects so we don't need to search for them all the time
         */
-        this.$container  = $(el);
-        this.$items      = $(this.options.selector, el);
+        this.$container   = $(el);
+        this.$items       = $(this.options.selector, el);
+
         /*
         * Setup
         */
         this._index      = this.options.startAt || 0;
         this._intervalId = 0;
-        
+
         /*
         * Constants for swipe directions
         */
@@ -234,6 +237,8 @@
             var self = this;
             setTimeout(function () {
                 self.options.onSwipeEnd.call(self, index);
+                $(self.options.indicatorElement).removeClass('active');
+                $(self.options.indicatorElement).eq(self.index()).addClass('active');
             }, speed);
             
         };
@@ -366,6 +371,7 @@
         
             this._offset  = this.$movable.offset().left;
         };
+
         
         /*
         * Setup slider and start the automatic slide (if any)
@@ -407,6 +413,21 @@
                         self.slideTo(self.index(), 0);
                     }, 50);
                 });
+            }
+
+            if (this.options.indicators) {
+
+                // Add the initial skeleton for the indicators 
+                this.$container.after('<div class="gallery-indicators"><div class="absolute-center-box"><div class="inner"><!--Remove --><div class="item active"><span></span></div><div class="item"><span></span></div><div class="item"><span></span></div><!--Remove --></div></div></div>');
+
+                // Add the onclick event control for indicators
+                if (this.options.indicatorElement) {
+                    $(this.options.indicatorElement).on('click', function(){
+                        self.slideTo($(this).index());
+                        self.stop();
+                    });
+                }
+
             }
             
         };
