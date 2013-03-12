@@ -10,9 +10,26 @@
 		<!-- Simple initialization, with automatic sliding every 4th second -->
 		<script>
 			$(document).ready(function () {
-				new Swipr(document.getElementById('mySwiprContainer'), {
-					auto: 4000
+
+				var $swipeIndicators = $('.gallery-indicators .item');
+				
+				var swipe = new Swipr(document.getElementById('mySwiprContainer'), {
+					auto:5000,
+					onSwipeEnd: function() {
+					
+						$swipeIndicators.removeClass('active');
+						$swipeIndicators.eq(this.index()).addClass('active');
+						
+					}
 				});
+				
+				$swipeIndicators.on('click', function(){
+				
+					swipe.slideTo($(this).index());
+					swipe.stop();
+					
+				});
+				
 			});
 		</script>
 		
