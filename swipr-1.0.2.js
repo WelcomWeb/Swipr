@@ -418,7 +418,16 @@
             if (this.options.indicators) {
 
                 // Add the initial skeleton for the indicators 
-                this.$container.after('<div class="gallery-indicators"><div class="absolute-center-box"><div class="inner"><!--Remove --><div class="item active"><span></span></div><div class="item"><span></span></div><div class="item"><span></span></div><!--Remove --></div></div></div>');
+                this.$container.after('<div class="gallery-indicators"><div class="absolute-center-box"><div class="inner"> </div></div></div>');
+
+                // Add indicators via swipe-item (or whatever the user config'd the items to be) count
+                for ( var i = 0, len = this.$items.length; i < len; i++ ) {
+                    if(i==0){
+                        $('.absolute-center-box .inner').append('<div class="item active"><span></span></div>');
+                    } else {
+                        $('.absolute-center-box .inner').append('<div class="item"><span></span></div>');
+                    }
+                }
 
                 // Add the onclick event control for indicators
                 if (this.options.indicatorElement) {
