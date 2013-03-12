@@ -45,20 +45,8 @@ footer {
         height: 10px;
         background-color: #AAA;
         border-radius: 5px;background-image: linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
-        background-image: -o-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
-        background-image: -moz-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
-        background-image: -webkit-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
-        background-image: -ms-linear-gradient(bottom, rgb(176,176,176) 0%, rgb(230,230,230) 100%);
-        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(176,176,176)), color-stop(1, rgb(230,230,230)));
-        box-shadow: 1px 1px 3px #777;
       }
       .absolute-center-box .item.active span{
         background-color: red;
         cursor: default;
-        background-image: linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
-        background-image: -o-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
-        background-image: -moz-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
-        background-image: -webkit-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
-        background-image: -ms-linear-gradient(bottom, rgb(191,32,32) 0%, rgb(255,15,15) 100%);
-        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(191,32,32)), color-stop(1, rgb(255,15,15)));
       }
