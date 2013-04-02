@@ -5,14 +5,27 @@
 		<link rel="stylesheet" href="styles.css" />
 		<link rel="stylesheet" href="bootstrap.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script src="../swipr-1.0.1.js"></script>
+		<script src="../swipr-1.1.js"></script>
+		<script src="../swipr-batteries-1.0.js"></script>
 		
 		<!-- Simple initialization, with automatic sliding every 4th second -->
 		<script>
 			$(document).ready(function () {
-				new Swipr(document.getElementById('mySwiprContainer'), {
+				var swipr = new Swipr(document.getElementById('mySwiprContainer'), {
 					auto: 4000
 				});
+
+				/*
+				* Using gallery indicators from Swipr Batteries, with default
+				* look & feel
+				*/
+				Swipr.Batteries.attachIndicators(swipr);
+
+				/*
+				* Using slide controls from Swipr Batteries, with default
+				* look & feel
+				*/
+				Swipr.Batteries.attachSlideControls(swipr);
 			});
 		</script>
 		
@@ -26,6 +39,9 @@
 					float: left;
 				}
 		</style>
+		<!-- Batteries CSS, for the indicators -->
+		<link rel="stylesheet" href="../swipr-batteries-1.0.css" />
+
 	</head>
 	<body>
 		<header class="container">
