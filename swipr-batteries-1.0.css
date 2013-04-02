@@ -1,0 +1,71 @@
+/* Classes for indicators */
+.swipr-indicators {
+    width: 100%;
+    margin: 10px 0;
+    clear: both;
+}
+    .swipr-indicator {
+        display: block;
+        background-color: #c9c9c9;
+        width: 12px;
+        height: 12px;
+        float: left;
+        margin-right: 7px;
+        cursor: pointer;
+
+                border-radius: 6px;
+             -o-border-radius: 6px;
+            -ms-border-radius: 6px;
+           -moz-border-radius: 6px;
+         -khtml-border-radius: 6px;
+        -webkit-border-radius: 6px;
+    }
+        .swipr-indicator.active {
+            background-color: #DF4F4F;
+        }
+
+/* Classes for slider controls */
+.swipr-control-base {
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    z-index: 2;
+    cursor: pointer;
+    background-color: #c9c9c9;
+    background-color: rgba(201, 201, 201, .7);
+    
+            border-radius: 25px;
+         -o-border-radius: 25px;
+        -ms-border-radius: 25px;
+       -moz-border-radius: 25px;
+     -khtml-border-radius: 25px;
+    -webkit-border-radius: 25px;
+}
+    .swipr-control-prev {
+        left: -15px;
+    }
+        .swipr-control-prev span {
+            width: 0;
+            height: 0;
+            margin-left: 19px;
+            margin-top: 15px;
+            float: left;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #333;
+        }
+    .swipr-control-next {
+        right: -15px;
+    }
+        .swipr-control-next span {
+            width: 0;
+            height: 0;
+            margin-right: 19px;
+            margin-top: 15px;
+            float: right;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #333;
+        }
