@@ -1,11 +1,11 @@
 /**
-* Swipr 1.0.1
+* Swipr 1.1
 *
 * A responsive, mobile friendly, javascript and CSS3 slider
 *
 * @author Björn Wikström <bjorn@welcom.se>
 * @license LGPL v3 <http://www.gnu.org/licenses/lgpl.html>
-* @version 1.0.1
+* @version 1.1
 * @copyright Welcom Web i Göteborg AB 2013
 */
 ;(function (window, document, $, undef) {
@@ -87,7 +87,7 @@
                 'transitions': !!(function () {
                     
                     var style = document.createElement('div').style;
-                    return    'transition' in style ||
+                    return  'transition' in style ||
                             'WebkitTransition' in style ||
                             'MozTransition' in style ||
                             'msTransition' in style ||
@@ -212,12 +212,18 @@
             
             speed = speed || this.options.speed;
             
+            var self = this;
+            setTimeout(function () {
+                self.options.onSwipeEnd.call(self, index);
+            }, speed);
+
             /*
             * Check to see if transitions is enabled or if the animation
             * should be forced to use JavaScript animation
             */
             if (!this.has.transitions || force) {
-                return _animatedSlide.call(this, posX, speed, index);
+                _animatedSlide.call(this, posX, speed, index);
+                return;
             }
             
             style.webkitTransitionDuration = 
@@ -230,11 +236,6 @@
             style.msTransform = 
                 style.MozTransform = 
                     style.OTransform = 'translateX(' + posX + 'px)';
-
-            var self = this;
-            setTimeout(function () {
-                self.options.onSwipeEnd.call(self, index);
-            }, speed);
             
         };
 
@@ -250,9 +251,7 @@
         var _animatedSlide = function (posX, speed, index) {
             
             var self = this;
-            this.$movable.animate({'left': posX + 'px'}, speed, function () {
-                self.options.onSwipeEnd.call(self, index);
-            });
+            this.$movable.animate({'left': posX + 'px'}, speed);
             
         };
         
@@ -360,8 +359,8 @@
             this.$items.css({
                 'width': this.$container.width() + 'px'
             });
-            this.$container.children().css({
-                'width': (this.$items.length * this.$container.width()) + 'px'
+            this.$movable.css({
+                'width': '99999px'
             });
         
             this._offset  = this.$movable.offset().left;
