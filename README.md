@@ -85,6 +85,11 @@ jQuery initialization:
     // or initialize on multiple DOM elements;
     $('.mySwiprContainers').Swipr(options);
 
+## Batteries
+Swipr comes by default without any controls or such alike, so an extension library is available which is called `Batteries`. It contains two methods, one creating indicators to show and interact with the slides, and one creating previous- and next-controls for the slidable items.
+
+Usage examples are included in the examples files.
+
 ## The API methods
 
 ### Swipr.stop()
