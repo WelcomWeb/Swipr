@@ -115,3 +115,5 @@ Swipr is released under [LGPL 3](https://www.gnu.org/copyleft/lesser.html).
 
 
 Happy coding!
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/64a45e5f0863b6ef44cdfbf328cb930a "githalytics.com")](http://githalytics.com/WelcomWeb/Swipr)
