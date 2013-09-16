@@ -385,9 +385,7 @@
             */
             this.$movable = $('<div style="overflow: hidden; position: relative;"></div>');
             this.$items.appendTo(this.$movable.appendTo(self.$container));
-            $(window).load(function () {
-                _startTouchSwipe.call(self);
-            });
+            _startTouchSwipe.call(self);
 
             _resetSizes.call(this);
             

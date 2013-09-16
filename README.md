@@ -9,12 +9,13 @@ Currently Swipr is dependent on [jQuery](https://github.com/jquery/jquery), whic
 ## Browser support
 The library is tested in (and on):
 
-* Firefox 19 (desktop)
+* Firefox 19, 20, 21, 22, 23 (desktop)
 * Safari 6 (desktop)
-* Chrome 25 (desktop)
+* Chrome 25, 26, 26, 28, 29 (desktop)
 * Internet Explorer 7, 8, 9, 10 (desktop)
 * Opera 12.14 (desktop)
 * Chrome Mobile 24, 25 (Nexus 4 with Android 4.2.2, Galaxy Nexus with Android 4.2.1)
+* Chrome Mobile 26, 27, 28, 29 (Nexus 4 with Android 4.3)
 * Chrome Mobile 24, 25 (Nexus 7 with Android 4.2.2)
 * Chrome Mobile 23, 24, 25 (iPhone with iOS6)
 * Safari Mobile (iPhone with iOS6)
@@ -49,7 +50,8 @@ Swipr needs minimal setup - the minimum amount of CSS, HTML and JavaScript is as
 
 #### JavaScript
 
-    $(document).ready(function () {
+    /* Use `$(window).load` to wait for the images to be loaded */
+    $(window).load(function () {
         new Swipr(document.getElementById('mySwiprContainer'));
     })
 
